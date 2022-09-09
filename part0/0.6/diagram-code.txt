@@ -1,0 +1,39 @@
+
+title User creates a new note on spa app 
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: spa.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server via (XHR)
+end note
+
+browser->server: XHR https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
+note over browser:
+user enters new note data
+browser executes the event handler
+that handles submission
+end note
+note over browser:
+New note is added to notes array on client side
+Render function called to re-render notes
+end note 
+note over browser:
+browser sends HTTP POST with headers
+detailing the content is JSON
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/exampleapp/new_note_spa
+server-->browser: HTTP 201 (created)
+
