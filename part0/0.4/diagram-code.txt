@@ -1,3 +1,4 @@
+
 title User creates a new note on page 
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
@@ -22,7 +23,8 @@ end note
 
 note over browser:
 browser gets data entered by user
-and sends to server
+and sends to server when the user
+click 'submit' button
 end note
 
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
