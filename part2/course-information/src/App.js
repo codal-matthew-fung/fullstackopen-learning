@@ -15,10 +15,8 @@ const Content = ({ parts }) => (
 )
 
 const Course = ({ course }) => {
-  let total = 0;
-  if (course.parts.length > 0) {
-    course.parts.map(part => total += part.exercises);
-  }
+  let total = course.parts.reduce((sum, part) => sum + part.exercises, 0);
+
   return (
     <div>
       <Header course={course.name} />
