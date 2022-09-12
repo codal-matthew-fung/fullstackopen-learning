@@ -14,12 +14,19 @@ const Content = ({ parts }) => (
   </>
 )
 
-const Course = ({ course }) => (
-  <div>
-    <Header course={course.name} />
-    <Content parts={course.parts} />
-  </div>
-)
+const Course = ({ course }) => {
+  let total = 0;
+  if (course.parts.length > 0) {
+    course.parts.map(part => total += part.exercises);
+  }
+  return (
+    <div>
+      <Header course={course.name} />
+      <Content parts={course.parts} />
+      <Total sum={total} />
+    </div>
+  )
+}
 
 const App = () => {
   const course = {
