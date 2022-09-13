@@ -1,18 +1,23 @@
 import { useState } from 'react'
 const People = (props) => {
-
   return (
     <>
       {props.persons.map(person => <p key={person.name}>{person.name} - {person.number}</p>)}
     </>
   )
 }
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '01234' }
-  ])
+  const initialPersonsState = [
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ]
+  const [persons, setPersons] = useState(initialPersonsState)
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -28,16 +33,36 @@ const App = () => {
     setPersons(personsCopy)
   }
 
+  const filterPeople = (people) => {
+    const filteredPeople = people.filter(person => person.name.includes(filter));
+
+    setPersons(filteredPeople)
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.currentTarget.value);
   }
   const handleNumberChange = (event) => {
     setNewNumber(event.currentTarget.value);
   }
+  const handleFilterChange = (event) => {
+    // If the input is empty, reset state to initialState
+    if (event.currentTarget.value.length === 0) {
+      // Clear FilterState
+      setFilter('')
+      // Reset persons to initial state
+      setPersons(initialPersonsState);
+      return;
+    }
+    setFilter(event.currentTarget.value);
+    const personsCopy = [...persons]
+    filterPeople(personsCopy)
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <p>filter people: <input value={filter} onChange={handleFilterChange} /> </p>
       <form>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
