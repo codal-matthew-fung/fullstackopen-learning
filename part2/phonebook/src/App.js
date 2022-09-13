@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 const People = (props) => {
   return (
     <>
@@ -6,6 +7,26 @@ const People = (props) => {
     </>
   )
 }
+
+const Filter = ({ filter, handleFilterChange }) => {
+  return (
+    <p>filter people: <input value={filter} onChange={handleFilterChange} /> </p>
+  )
+}
+
+const AddPersonForm = (props) => (
+  <form>
+    <div>
+      name: <input value={props.newName} onChange={props.handleNameChange} />
+    </div>
+    <div>
+      number: <input value={props.newNumber} onChange={props.handleNumberChange} />
+    </div>
+    <div>
+      <button type="submit" onClick={props.addPerson}>add</button>
+    </div>
+  </form>
+)
 
 const App = () => {
   const initialPersonsState = [
@@ -35,8 +56,7 @@ const App = () => {
 
   const filterPeople = (people) => {
     const filteredPeople = people.filter(person => person.name.includes(filter));
-
-    setPersons(filteredPeople)
+    return setPersons(filteredPeople)
   }
 
   const handleNameChange = (event) => {
@@ -62,18 +82,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>filter people: <input value={filter} onChange={handleFilterChange} /> </p>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={addPerson}>add</button>
-        </div>
-      </form>
+      <Filter filter={filter} handleFilterChange={handleFilterChange} />
+      <AddPersonForm
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+        addPerson={addPerson}
+      />
       <h2>Numbers</h2>
       <People persons={persons} />
     </div>
