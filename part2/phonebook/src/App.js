@@ -9,9 +9,14 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault();
     const personsCopy = [...persons];
-    const person = { name: newName };
-    personsCopy.push(person);
+    const newPerson = { name: newName };
 
+    if (personsCopy.some(person => person.name == newName)) {
+      window.alert(`${newPerson.name} is already added to the phonebook.`);
+      return;
+    }
+
+    personsCopy.push(newPerson);
     setPersons(personsCopy)
   }
 
